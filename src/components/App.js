@@ -6,6 +6,12 @@ import Footer from "./Footer";
 
 
 function App() {
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
+  const [isAddPlacePopupOpen, setAddPlacePopupOpe] = React.useState(false);
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
+
+  ОСТАНОВИЛСЯ Тутъ
+
   return (
     <>
       <meta charSet="UTF-8" />
@@ -147,16 +153,7 @@ function App() {
             {/* class="popup__submit-button popup__" */}
           </div>
         </div>
-        {/* Создаю попап для открытия картинки*/}
-        <div className="popup popup_image-open" id="popup-image">
-          <div className="popup__container popup__container_image">
-            <button type="button" className="popup__close popup__close-image" />
-            <div className="popup__wrapper">
-              <img className="popup__image" alt="картинка-карточка" />
-              <p className="popup__caption" />
-            </div>
-          </div>
-        </div>
+       
       </div>
       </body>
       <template id="card-item-template" />
