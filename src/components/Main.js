@@ -16,7 +16,8 @@ function Main(){
                 src="<%=require('./images/Avatar.png')%>"
                 alt="Аватар"
                 className="profile__avatar"
-              />
+                
+             />
             </div>
             <div className="profile__info">
               <div className="profile__name-content">
