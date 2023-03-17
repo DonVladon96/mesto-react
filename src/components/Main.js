@@ -61,7 +61,7 @@ function Main(props) {
                 key={card._id}
                 card={card}
                 openCard={props.openCard}
-                deleteCard={props.openDelete}
+                deleteCard={props.openDeleteConfirm}
               />
             )}
     </article>

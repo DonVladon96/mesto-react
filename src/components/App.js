@@ -29,14 +29,24 @@ function App() {
 
   //функция закрытия всех попапов
   function closeAllPopups() {
+    setCardOpen(false);
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
     setEditAvatarPopupOpen(false);
+    setConfirmDeletePopup(false);
   }
 
   function handleConfirmDeletePopup() {
     setConfirmDeletePopup(true);
   }
+
+  function handleOpenCardClick(cardsData) {
+    setCardOpen(true);
+    setSelectedCard(cardsData);
+  }
+
+  const [isCardOpen, setCardOpen] = React.useState(false);
+  const [isSelectedCard, setSelectedCard] = React.useState({});
 
   return (
     <>
@@ -55,10 +65,9 @@ function App() {
             openAddCard={handleAddPlaceClick}
             openUserAvatar={handleEditAvatarClick}
             openDeleteConfirm={handleConfirmDeletePopup}
-            
+            openCard={handleOpenCardClick}
           />
           <Footer />
-          {/* для аватара */}
           <PopupWithForm
             name="avatar"
             title="Обновить аватар"
@@ -78,6 +87,7 @@ function App() {
               вы пропустили поле.
             </span>
           </PopupWithForm>
+
           {/* для редактирования профиля */}
           <PopupWithForm
             name="user"
@@ -113,11 +123,12 @@ function App() {
               вы пропустили поле.
             </span>
           </PopupWithForm>
+
           {/* для добавления карточек */}
           <PopupWithForm
             name="cardName"
             title="Новое место"
-            buttonText="создать"
+            buttonText="Создать"
             isOpen={isAddPlacePopupOpen}
             isClosed={closeAllPopups}
           >
@@ -147,6 +158,13 @@ function App() {
             </span>
           </PopupWithForm>
 
+          {/* для открытия картинки */}
+          <ImagePopup>
+            card = {isSelectedCard}
+            isOpen = {isCardOpen}
+            isClosed = {closeAllPopups}
+          </ImagePopup>
+
           {/* для подтверждения удаления  */}
           <PopupWithForm
             name="delete-card"
@@ -157,7 +175,7 @@ function App() {
           ></PopupWithForm>
         </div>
       </body>
-      <template id="card-item-template" />
+     
     </>
   );
 }
