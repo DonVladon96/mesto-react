@@ -57,12 +57,12 @@ function App() {
       <meta name="Translate" content="Место" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>Mesto</title>
-      <body class="body-container">
+      <body className="body-container">
         <div className="main-page">
           <Header />
           <Main
-            openEdit={handleEditProfileClick}
-            openAddCard={handleAddPlaceClick}
+            openProfileEdit={handleEditProfileClick}
+            addButtonCard={handleAddPlaceClick}
             openUserAvatar={handleEditAvatarClick}
             openDeleteConfirm={handleConfirmDeletePopup}
             openCard={handleOpenCardClick}
@@ -159,11 +159,11 @@ function App() {
           </PopupWithForm>
 
           {/* для открытия картинки */}
-          <ImagePopup>
-            card = {isSelectedCard}
-            isOpen = {isCardOpen}
-            isClosed = {closeAllPopups}
-          </ImagePopup>
+          <ImagePopup
+            card={isSelectedCard}
+            isOpen={isCardOpen}
+            isClosed={closeAllPopups}
+          ></ImagePopup>
 
           {/* для подтверждения удаления  */}
           <PopupWithForm
@@ -175,7 +175,6 @@ function App() {
           ></PopupWithForm>
         </div>
       </body>
-     
     </>
   );
 }

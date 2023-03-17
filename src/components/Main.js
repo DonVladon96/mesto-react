@@ -8,7 +8,7 @@ function Main(props) {
   const [userName, setUserName] = React.useState("");
   const [userAbout, setUserAbout] = React.useState("");
 
-  const [isCards, setCard] = React.useState([]);//описать кардс.жс
+  const [isCards, setCard] = React.useState([]); //описать кардс.жс
 
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -53,20 +53,17 @@ function Main(props) {
           onClick={props.addButtonCard}
         />
       </section>
-    {/* создать кард.жс */}
+      {/* создать кард.жс */}
       <section className="elements">
-    <article className="element">
-    {isCards.map((card, ) =>
-              <Card
-                key={card._id}
-                card={card}
-                openCard={props.openCard}
-                deleteCard={props.openDeleteConfirm}
-              />
-            )}
-    </article>
+          {isCards.map((card) => (
+            <Card
+              key={card._id}
+              card={card}
+              openCard={props.openCard}
+              deleteCard={props.openDeleteConfirm}
+            />
+          ))}
       </section>
-   
     </main>
   );
 }
