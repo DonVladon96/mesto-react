@@ -8,12 +8,11 @@ function Main(props) {
   const [userName, setUserName] = React.useState("");
   const [userAbout, setUserAbout] = React.useState("");
 
-  const [isCards, setCard] = React.useState([]); //описать кардс.жс
+  const [cards, setCard] = React.useState([]); //описать кардс.жс
 
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
-      .then((data) => {
-        const [userData, cardsData] = data;
+      .then(([userData, cardsData]) => {
         setUserAvatar(userData.avatar);
         setUserName(userData.name);
         setUserAbout(userData.aboute);
@@ -55,7 +54,7 @@ function Main(props) {
       </section>
       {/* создать кард.жс */}
       <section className="elements">
-          {isCards.map((card) => (
+          {cards.map((card) => (
             <Card
               key={card._id}
               card={card}
