@@ -13,8 +13,6 @@ function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
   const [isConfirmDeletePopup, setConfirmDeletePopup] = React.useState(false);
-  const [isCardOpen, setCardOpen] = React.useState(false);
-  const [isSelectedCard, setSelectedCard] = React.useState({});
 
   //описываю функции для всех изменений начального состояния
   function handleEditProfileClick() {
@@ -47,10 +45,19 @@ function App() {
     setSelectedCard(cardsData);
   }
 
-  
+  const [isCardOpen, setCardOpen] = React.useState(false);
+  const [isSelectedCard, setSelectedCard] = React.useState({});
+
   return (
     <>
-      <div className="body-container">
+      <meta charSet="UTF-8" />
+      <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="author" content="Петров Владислав" />
+      <meta name="Title" content="Mesto" />
+      <meta name="Translate" content="Место" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Mesto</title>
+      <body className="body-container">
         <div className="main-page">
           <Header />
           <Main
@@ -167,7 +174,7 @@ function App() {
             isClosed={closeAllPopups}
           ></PopupWithForm>
         </div>
-      </div>
+      </body>
     </>
   );
 }
