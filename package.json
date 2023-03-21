@@ -37,7 +37,7 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://github.com/DonVladon96/mesto-react#readme",
+  "homepage": "https://github.com/DonVladon96/mesto-react",
   "devDependencies": {
     "gh-pages": "^5.0.0"
   }
