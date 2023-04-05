@@ -33,26 +33,41 @@ function App() {
 			.then((data) => {
 				const [userData, cardsData] = data;
 
-				setCurrentUser(userData)
+				setCurrentUser(userData);
 
-				setCard(cardsData)
+				setCard(cardsData);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	}, []);
 
-
 	function handleCardLike(card) {
 		const isLiked = card.likes.some(i => i._id === currentUser._id);
-
-		api.
+		api.addLike(card._id, !isLiked)
+			.then((newCard) => {
+				setCard((state) => state.map((c) => c._id === card._id ? newCard : c));
+			})
+			.catch((err) => {
+				console.log(`Ошибка: ${err}`);
+			});
 	}
 
 
 	//описываю функции для всех изменений начального состояния
 	function handleEditProfileClick() {
 		setEditProfilePopupOpen(true);
+	}
+
+	function handleChangeAvatar({ avatar }) {
+		api.updateUserAvatar({ avatar })
+			.then((res) => {
+				setCurrentUser(res);
+				closeAllPopups();
+			})
+			.catch((err) => {
+				console.log(`Ошибка: ${err}`);
+			});
 	}
 
 	function handleAddPlaceClick() {
@@ -82,7 +97,7 @@ function App() {
 	}
 
 	return (
-		<>
+		<CurrentUserContext.Provider value={currentUser}>
 			<div className='main-page'>
 				<Header />
 				<Main
@@ -91,6 +106,7 @@ function App() {
 					openUserAvatar={handleEditAvatarClick}
 					openDeleteConfirm={handleConfirmDeletePopup}
 					openCard={handleOpenCardClick}
+					cardLike={handleCardLike}
 				/>
 				<Footer />
 				<PopupWithForm
@@ -199,7 +215,7 @@ function App() {
 					isClosed={closeAllPopups}
 				></PopupWithForm>
 			</div>
-		</>
+		</CurrentUserContext.Provider>
 	);
 }
 

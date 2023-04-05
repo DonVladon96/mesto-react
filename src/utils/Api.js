@@ -34,11 +34,11 @@ class Api {
 			});
 	}
 
-	updateUserAvatar(avatar) {
+	updateUserAvatar({ avatar }) {
 		return fetch(`${this._baseUrl}users/me/avatar`, {
 			headers: this._headers,
 			method: 'PATCH',
-			body: JSON.stringify(avatar)
+			body: JSON.stringify({ avatar })
 		})
 			.then((response) => {
 				if (response.ok) {
@@ -97,8 +97,8 @@ class Api {
 			});
 	}
 
-	addLike(cardId, isLiked) {
-		return fetch(`${this._baseUrl}cards/likes/${cardId}`, {
+	addLike(id, isLiked) {
+		return fetch(`${this._baseUrl}cards/likes/${id}`, {
 			method: isLiked ? 'PUT' : 'DELETE',
 			headers: this._headers
 		})
@@ -112,8 +112,8 @@ class Api {
 			});
 	}
 
-	deleteLike(cardId) {
-		return fetch(`${this._baseUrl}cards/likes/${cardId}`, {
+	deleteLike(id) {
+		return fetch(`${this._baseUrl}cards/likes/${id}`, {
 			method: 'DELETE',
 			headers: this._headers
 		})
