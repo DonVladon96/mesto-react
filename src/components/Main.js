@@ -1,13 +1,10 @@
-import api from '../utils/Api'
-import Card from './Card'
+import Card from './Card';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import { useContext } from 'react';
+
 
 function Main(props) {
-	const [userAvatar, setUserAvatar] = useState('')
-	const [userName, setUserName] = useState('')
-	const [userAbout, setUserAbout] = useState('')
-
-	const [isCards, setCard] = useState([]) //описать кардс.жс
-
+	const currentUser = useContext(CurrentUserContext);
 
 	return (<main className='main-content'>
 		<section className='profile section section_size_narrow'>
@@ -15,7 +12,7 @@ function Main(props) {
 				className='profile__avatar-container'
 				onClick={props.openUserAvatar}
 			>
-				<img src={userAvatar} alt='Аватар' className='profile__avatar' />
+				<img src={currentUser.avatar} alt='Аватар' className='profile__avatar' />
 			</div>
 			<div className='profile__info'>
 				<div className='profile__name-content'>
@@ -43,9 +40,10 @@ function Main(props) {
 				card={card}
 				openCard={props.openCard}
 				deleteCard={props.openDeleteConfirm}
+				cardLike={props.cardLike}
 			/>))}
 		</section>
-	</main>)
+	</main>);
 }
 
-export default Main
+export default Main;
