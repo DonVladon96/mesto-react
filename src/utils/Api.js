@@ -21,12 +21,11 @@ class Api {
 
 	getInitialCards() {
 		return fetch(`${this._baseUrl}cards`, {
-			method: 'GET',
 			headers: this._headers
 		})
-			.then((response) => {
-				if (response.ok) {
-					return response.json();
+			.then((res) => {
+				if (res.ok) {
+					return res.json();
 				}
 			})
 			.catch((err) => {

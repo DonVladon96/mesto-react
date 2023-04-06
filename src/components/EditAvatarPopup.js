@@ -12,16 +12,16 @@ function EditAvatarPopup(props) {
 		setAvatar('');
 	}, [props.isOpen]);
 
-	function useSubmit(e) {
-		e.preventDefault();
+	function useSubmit(evt) {
+		evt.preventDefault();
 
-		props.goSubmit({ avatar });
+		props.onSubmit({ avatar });
 
 		setAvatar('');
 	}
 
-	function useChanglerAvatar(e) {
-		setAvatar(e.target.value);
+	function useChanglerAvatar(evt) {
+		setAvatar(evt.target.value);
 	}
 
 	return (
@@ -31,7 +31,7 @@ function EditAvatarPopup(props) {
 			buttonText='Сохранить'
 			isOpen={props.isOpen}
 			isClosed={props.isClosed}
-			goSubmit={useSubmit}
+			onSubmit={useSubmit}
 		>
 			<input
 				type='url'

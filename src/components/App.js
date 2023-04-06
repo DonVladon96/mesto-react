@@ -35,7 +35,7 @@ function App() {
 				setCard(cardsData);
 			})
 			.catch((err) => {
-				console.log(err);
+				console.log(`Ошибка: ${err}`);
 			});
 	}, []);
 
@@ -113,7 +113,7 @@ function App() {
 				<EditAvatarPopup
 					isOpen={isEditAvatarPopupOpen}
 					isClosed={closeAllPopups}
-					goSubmit={handleChangeAvatar}
+					onSubmit={handleChangeAvatar}
 				/>
 
 				{/* для редактирования профиля */}
