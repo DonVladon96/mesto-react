@@ -6,16 +6,14 @@ import Footer from './Footer';
 
 import ImagePopup from './ImagePopup';
 import PopupWithForm from './PopupWithForm';
-
+import EditAvatarPopup from './EditAvatarPopup';
 
 import api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-
 function App() {
 	//использую хуки, чтобы задать начальное состояние(false)
-	const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
-		useState(false);
+	const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
 	const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
 	const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
 	const [isConfirmDeletePopup, setConfirmDeletePopup] = useState(false);
@@ -24,7 +22,6 @@ function App() {
 
 	// Создайте стейт currentUser в корневом компоненте
 	const [currentUser, setCurrentUser] = useState('');
-
 
 	const [cards, setCard] = useState([]);
 
@@ -43,16 +40,18 @@ function App() {
 	}, []);
 
 	function handleCardLike(card) {
-		const isLiked = card.likes.some(i => i._id === currentUser._id);
-		api.addLike(card._id, !isLiked)
+		const isLiked = card.likes.some((i) => i._id === currentUser._id);
+		api
+			.addLike(card._id, !isLiked)
 			.then((newCard) => {
-				setCard((state) => state.map((c) => c._id === card._id ? newCard : c));
+				setCard((state) =>
+					state.map((c) => (c._id === card._id ? newCard : c))
+				);
 			})
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
 			});
 	}
-
 
 	//описываю функции для всех изменений начального состояния
 	function handleEditProfileClick() {
@@ -60,7 +59,8 @@ function App() {
 	}
 
 	function handleChangeAvatar({ avatar }) {
-		api.updateUserAvatar({ avatar })
+		api
+			.updateUserAvatar({ avatar })
 			.then((res) => {
 				setCurrentUser(res);
 				closeAllPopups();
@@ -107,27 +107,14 @@ function App() {
 					openDeleteConfirm={handleConfirmDeletePopup}
 					openCard={handleOpenCardClick}
 					cardLike={handleCardLike}
+					cards={cards}
 				/>
 				<Footer />
-				<PopupWithForm
-					name='avatar'
-					title='Обновить аватар'
-					buttonText='Сохранить'
+				<EditAvatarPopup
 					isOpen={isEditAvatarPopupOpen}
 					isClosed={closeAllPopups}
-				>
-					<input
-						type='url'
-						name='avatar'
-						placeholder='Ссылка на картинку'
-						className='popup__input popup__input_avatar-link'
-						id='avatar-link'
-						required=''
-					/>
-					<span className='avatar-link-error popup__input-error'>
-            вы пропустили поле.
-          </span>
-				</PopupWithForm>
+					goSubmit={handleChangeAvatar}
+				/>
 
 				{/* для редактирования профиля */}
 				<PopupWithForm
@@ -148,8 +135,8 @@ function App() {
 						required=''
 					/>
 					<span className='input-name-error popup__input-error'>
-            вы пропустили поле.
-          </span>
+						вы пропустили поле.
+					</span>
 					<input
 						type='text'
 						name='dataJob'
@@ -161,8 +148,8 @@ function App() {
 						required=''
 					/>
 					<span className='input-job-error popup__input-error'>
-            вы пропустили поле.
-          </span>
+						вы пропустили поле.
+					</span>
 				</PopupWithForm>
 
 				{/* для добавления карточек */}
@@ -184,8 +171,8 @@ function App() {
 						required=''
 					/>
 					<span className='card-name-error popup__input-error'>
-            вы пропустили поле.
-          </span>
+						вы пропустили поле.
+					</span>
 					<input
 						type='url'
 						name='cardLink'
@@ -195,8 +182,8 @@ function App() {
 						required=''
 					/>
 					<span className='card-link-error popup__input-error'>
-            вы пропустили поле.
-          </span>
+						вы пропустили поле.
+					</span>
 				</PopupWithForm>
 
 				{/* для открытия картинки */}
