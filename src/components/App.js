@@ -7,6 +7,8 @@ import Footer from './Footer';
 import ImagePopup from './ImagePopup';
 import PopupWithForm from './PopupWithForm';
 import EditAvatarPopup from './EditAvatarPopup';
+import PopupWithVerification from './PopupWithVerification';
+import EditProfilePopup from './EditProfilePopup';
 
 import api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
@@ -25,6 +27,8 @@ function App() {
 
 	const [cards, setCard] = useState([]);
 
+	const [currentCard, setCurrentCard] = useState('');
+
 	useEffect(() => {
 		Promise.all([api.getUserInfo(), api.getInitialCards()])
 			.then((data) => {
@@ -39,6 +43,18 @@ function App() {
 			});
 	}, []);
 
+	function handleUpdateUser({ name, about }) {
+		api
+			.parseUserInfo({ name, about })
+			.then((response) => {
+				setCurrentUser(response);
+				closeAllPopups();
+			})
+			.catch((err) => {
+				console.log(`Ошибка: ${err}`);
+			});
+	}
+
 	function handleCardLike(card) {
 		const isLiked = card.likes.some((i) => i._id === currentUser._id);
 		api
@@ -47,6 +63,20 @@ function App() {
 				setCard((state) =>
 					state.map((c) => (c._id === card._id ? newCard : c))
 				);
+			})
+			.catch((err) => {
+				console.log(`Ошибка: ${err}`);
+			});
+	}
+
+	function handleCardDelete(event) {
+		event.preventDefault();
+
+		api
+			.deleteCard(currentCard._id)
+			.then(() => {
+				setCard(cards.filter((i) => i !== currentCard));
+				closeAllPopups();
 			})
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
@@ -115,43 +145,12 @@ function App() {
 					isClosed={closeAllPopups}
 					onSubmit={handleChangeAvatar}
 				/>
-
 				{/* для редактирования профиля */}
-				<PopupWithForm
-					name='user'
-					title='Редактировать профиль'
-					buttonText='Сохранить'
+				<EditProfilePopup
 					isOpen={isEditProfilePopupOpen}
 					isClosed={closeAllPopups}
-				>
-					<input
-						type='text'
-						id='input-name'
-						name='dataName'
-						className='popup__input'
-						placeholder='Как вас зовут?'
-						minLength={2}
-						maxLength={40}
-						required=''
-					/>
-					<span className='input-name-error popup__input-error'>
-						вы пропустили поле.
-					</span>
-					<input
-						type='text'
-						name='dataJob'
-						placeholder='Чем вы занимаетесь?'
-						className='popup__input'
-						id='input-job'
-						minLength={2}
-						maxLength={200}
-						required=''
-					/>
-					<span className='input-job-error popup__input-error'>
-						вы пропустили поле.
-					</span>
-				</PopupWithForm>
-
+					onUpdateUser={handleUpdateUser}
+				></EditProfilePopup>
 				{/* для добавления карточек */}
 				<PopupWithForm
 					name='cardName'
@@ -185,22 +184,18 @@ function App() {
 						вы пропустили поле.
 					</span>
 				</PopupWithForm>
-
 				{/* для открытия картинки */}
 				<ImagePopup
 					card={isSelectedCard}
 					isOpen={isCardOpen}
 					isClosed={closeAllPopups}
 				></ImagePopup>
-
 				{/* для подтверждения удаления  */}
-				<PopupWithForm
-					name='delete-card'
-					title='Вы уверены?'
-					buttonText='Да'
+				<PopupWithVerification
 					isOpen={isConfirmDeletePopup}
 					isClosed={closeAllPopups}
-				></PopupWithForm>
+					onSubmit={handleCardDelete}
+				></PopupWithVerification>
 			</div>
 		</CurrentUserContext.Provider>
 	);

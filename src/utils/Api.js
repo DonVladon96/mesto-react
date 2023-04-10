@@ -19,6 +19,22 @@ class Api {
 			});
 	}
 
+	parseUserInfo({ name, about }) {
+		return fetch(`${this._baseUrl}users/me`, {
+			headers: this._headers,
+			method: 'PATCH',
+			body: JSON.stringify({ name, about })
+		})
+			.then((response) => {
+				if (response.ok) {
+					return response.json();
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}
+
 	getInitialCards() {
 		return fetch(`${this._baseUrl}cards`, {
 			headers: this._headers
