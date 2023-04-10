@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function PopupWithForm(props) {
+
+
 	return (
 		<div
 			className={`popup popup_type_${props.name} ${

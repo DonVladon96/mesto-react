@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
+import Loader from './Loader';
 
 import ImagePopup from './ImagePopup';
 import PopupWithForm from './PopupWithForm';
@@ -14,6 +15,8 @@ import AddPlacePopup from './AddPlacePopup';
 import api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import card from './Card';
+import editAvatarPopup from './EditAvatarPopup';
+import loader from './Loader';
 
 function App() {
 	//использую хуки, чтобы задать начальное состояние(false)
@@ -23,6 +26,7 @@ function App() {
 	const [isConfirmDeletePopup, setConfirmDeletePopup] = useState(false);
 	const [isCardOpen, setCardOpen] = useState(false);
 	const [isSelectedCard, setSelectedCard] = useState({});
+	const [isLoading, setIsLoading] = useState(true);
 
 	// Создайте стейт currentUser в корневом компоненте
 	const [currentUser, setCurrentUser] = useState('');
@@ -89,7 +93,7 @@ function App() {
 	function handleEditProfileClick() {
 		setEditProfilePopupOpen(true);
 	}
-
+	
 	function handleChangeAvatar({ avatar }) {
 		api
 			.updateUserAvatar({ avatar })
@@ -159,7 +163,7 @@ function App() {
 					isOpen={isEditAvatarPopupOpen}
 					isClosed={closeAllPopups}
 					onSubmit={handleChangeAvatar}
-				/>
+				></EditAvatarPopup>
 				{/* для редактирования профиля */}
 				<EditProfilePopup
 					isOpen={isEditProfilePopupOpen}
