@@ -48,3 +48,4 @@
 @import url(./blocks/profile/__avatar-container/profile__avatar-container.css);
 @import url(./blocks/element/__like-number/element__like-number.css);
 @import url(./blocks/popup/__image-open/popup_image-open.css);
+@import url(./blocks/element/__button-trash/_visible/element__button-trash_visible.css);

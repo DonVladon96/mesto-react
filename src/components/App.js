@@ -9,9 +9,11 @@ import PopupWithForm from './PopupWithForm';
 import EditAvatarPopup from './EditAvatarPopup';
 import PopupWithVerification from './PopupWithVerification';
 import EditProfilePopup from './EditProfilePopup';
+import AddPlacePopup from './AddPlacePopup';
 
 import api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import card from './Card';
 
 function App() {
 	//использую хуки, чтобы задать начальное состояние(false)
@@ -100,6 +102,18 @@ function App() {
 			});
 	}
 
+	function handleAddPlacePopup({ name, link }) {
+		api
+			.createCard({ name, link })
+			.then((newCard) => {
+				setCard([newCard, ...cards]);
+				closeAllPopups();
+			})
+			.catch((err) => {
+				console.log(`Ошибка: ${err}`);
+			});
+	}
+
 	function handleAddPlaceClick() {
 		setAddPlacePopupOpen(true);
 	}
@@ -117,8 +131,9 @@ function App() {
 		setConfirmDeletePopup(false);
 	}
 
-	function handleConfirmDeletePopup() {
+	function handleConfirmDeletePopup(card) {
 		setConfirmDeletePopup(true);
+		setCurrentCard(card);
 	}
 
 	function handleOpenCardClick(cardsData) {
@@ -151,39 +166,14 @@ function App() {
 					isClosed={closeAllPopups}
 					onUpdateUser={handleUpdateUser}
 				></EditProfilePopup>
+
 				{/* для добавления карточек */}
-				<PopupWithForm
-					name='cardName'
-					title='Новое место'
-					buttonText='Создать'
+				<AddPlacePopup
 					isOpen={isAddPlacePopupOpen}
 					isClosed={closeAllPopups}
-				>
-					<input
-						type='text'
-						name='cardName'
-						placeholder='Название?'
-						className='popup__input'
-						id='card-name'
-						minLength={2}
-						maxLength={30}
-						required=''
-					/>
-					<span className='card-name-error popup__input-error'>
-						вы пропустили поле.
-					</span>
-					<input
-						type='url'
-						name='cardLink'
-						placeholder='Ссылка на картинку'
-						className='popup__input'
-						id='card-link'
-						required=''
-					/>
-					<span className='card-link-error popup__input-error'>
-						вы пропустили поле.
-					</span>
-				</PopupWithForm>
+					onAddCards={handleAddPlacePopup}
+				></AddPlacePopup>
+
 				{/* для открытия картинки */}
 				<ImagePopup
 					card={isSelectedCard}
