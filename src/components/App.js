@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { lazy, useEffect, useState, Suspense } from 'react';
 
+import Loader from '../Loader/Loader';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-import Loader from './Loader';
 
 import ImagePopup from './ImagePopup';
 import PopupWithForm from './PopupWithForm';
@@ -16,7 +16,8 @@ import api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import card from './Card';
 import editAvatarPopup from './EditAvatarPopup';
-import loader from './Loader';
+import loader from '../Loader/Loader';
+import WrapperForLoader from '../Loader/WrapperForLoader';
 
 function App() {
 	//использую хуки, чтобы задать начальное состояние(false)
@@ -43,6 +44,7 @@ function App() {
 				setCurrentUser(userData);
 
 				setCard(cardsData);
+				setIsLoading(false);
 			})
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
@@ -148,17 +150,38 @@ function App() {
 	return (
 		<CurrentUserContext.Provider value={currentUser}>
 			<div className='main-page'>
-				<Header />
-				<Main
-					openProfileEdit={handleEditProfileClick}
-					addButtonCard={handleAddPlaceClick}
-					openUserAvatar={handleEditAvatarClick}
-					openDeleteConfirm={handleConfirmDeletePopup}
-					openCard={handleOpenCardClick}
-					cardLike={handleCardLike}
-					cards={cards}
-				/>
-				<Footer />
+				{isLoading ? (
+					<WrapperForLoader>
+						<Loader></Loader>
+					</WrapperForLoader>
+				) : (
+					<>
+						{' '}
+						<Header></Header>
+						<Main
+							openProfileEdit={handleEditProfileClick}
+							addButtonCard={handleAddPlaceClick}
+							openUserAvatar={handleEditAvatarClick}
+							openDeleteConfirm={handleConfirmDeletePopup}
+							openCard={handleOpenCardClick}
+							cardLike={handleCardLike}
+							cards={cards}
+						></Main>
+						<Footer></Footer>
+					</>
+				)}
+
+				{/*<Header />*/}
+				{/*<Main*/}
+				{/*	openProfileEdit={handleEditProfileClick}*/}
+				{/*	addButtonCard={handleAddPlaceClick}*/}
+				{/*	openUserAvatar={handleEditAvatarClick}*/}
+				{/*	openDeleteConfirm={handleConfirmDeletePopup}*/}
+				{/*	openCard={handleOpenCardClick}*/}
+				{/*	cardLike={handleCardLike}*/}
+				{/*	cards={cards}*/}
+				{/*></Main>*/}
+				{/*<Footer />*/}
 				<EditAvatarPopup
 					isOpen={isEditAvatarPopupOpen}
 					isClosed={closeAllPopups}

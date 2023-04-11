@@ -49,4 +49,4 @@
 @import url(./blocks/element/__like-number/element__like-number.css);
 @import url(./blocks/popup/__image-open/popup_image-open.css);
 @import url(./blocks/element/__button-trash/_visible/element__button-trash_visible.css);
-@import url(./blocks/Loader/Loader.css);
+@import url(blocks/Loader-css/Loader.css);
