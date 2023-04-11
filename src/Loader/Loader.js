@@ -1,14 +1,18 @@
 import React from 'react';
-import { Audio } from 'react-loader-spinner';
+import { Audio, Watch } from 'react-loader-spinner';
 
 const Loader = () => {
 	return (
 		<div>
-			<Audio
+			<Watch
 				height='280'
 				width='280'
-				radius='9'
-				color='green'
+				radius='48'
+				color='#4fa94d'
+				ariaLabel='watch-loading'
+				wrapperStyle={{}}
+				wrapperClassName=''
+				visible={true}
 				ariaLabel='loading'
 			/>
 		</div>
