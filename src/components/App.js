@@ -56,11 +56,13 @@ function App() {
 			.parseUserInfo({ name, about })
 			.then((response) => {
 				setCurrentUser(response);
+				setIsLoading(false);
 				closeAllPopups();
 			})
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
-			});
+			})
+			.finally(setIsLoading(true));
 	}
 
 	function handleCardLike(card) {
@@ -84,11 +86,13 @@ function App() {
 			.deleteCard(currentCard._id)
 			.then(() => {
 				setCard(cards.filter((i) => i !== currentCard));
+				setIsLoading(false);
 				closeAllPopups();
 			})
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
-			});
+			})
+			.finally(setIsLoading(true));
 	}
 
 	//описываю функции для всех изменений начального состояния
@@ -101,11 +105,13 @@ function App() {
 			.updateUserAvatar({ avatar })
 			.then((res) => {
 				setCurrentUser(res);
+				setIsLoading(false);
 				closeAllPopups();
 			})
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
-			});
+			})
+			.finally(setIsLoading(true));
 	}
 
 	function handleAddPlacePopup({ name, link }) {
@@ -113,11 +119,13 @@ function App() {
 			.createCard({ name, link })
 			.then((newCard) => {
 				setCard([newCard, ...cards]);
+				setIsLoading(false);
 				closeAllPopups();
 			})
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
-			});
+			})
+			.finally(setIsLoading(true));
 	}
 
 	function handleAddPlaceClick() {
@@ -171,17 +179,6 @@ function App() {
 					</>
 				)}
 
-				{/*<Header />*/}
-				{/*<Main*/}
-				{/*	openProfileEdit={handleEditProfileClick}*/}
-				{/*	addButtonCard={handleAddPlaceClick}*/}
-				{/*	openUserAvatar={handleEditAvatarClick}*/}
-				{/*	openDeleteConfirm={handleConfirmDeletePopup}*/}
-				{/*	openCard={handleOpenCardClick}*/}
-				{/*	cardLike={handleCardLike}*/}
-				{/*	cards={cards}*/}
-				{/*></Main>*/}
-				{/*<Footer />*/}
 				<EditAvatarPopup
 					isOpen={isEditAvatarPopupOpen}
 					isClosed={closeAllPopups}
@@ -211,7 +208,15 @@ function App() {
 				<PopupWithVerification
 					isOpen={isConfirmDeletePopup}
 					isClosed={closeAllPopups}
-					onSubmit={handleCardDelete}
+					onSubmit={
+						isLoading ? (
+							<WrapperForLoader>
+								<Loader></Loader>
+							</WrapperForLoader>
+						) : (
+							handleCardDelete
+						)
+					}
 				></PopupWithVerification>
 			</div>
 		</CurrentUserContext.Provider>
