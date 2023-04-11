@@ -47,7 +47,7 @@ function EditProfilePopup(props) {
 				maxLength={40}
 				required=''
 				onChange={handleEditName}
-				value={name}
+				value={name || ''}
 			/>
 			<span className='input-name-error popup__input-error'>
 				вы пропустили поле.
@@ -62,7 +62,7 @@ function EditProfilePopup(props) {
 				maxLength={200}
 				required=''
 				onChange={handleEditDescription}
-				value={description}
+				value={description || ''}
 			/>
 			<span className='input-job-error popup__input-error'>
 				вы пропустили поле.

@@ -29,11 +29,11 @@ function App() {
 	const [isLoading, setIsLoading] = useState(true);
 
 	// Создайте стейт currentUser в корневом компоненте
-	const [currentUser, setCurrentUser] = useState('');
+	const [currentUser, setCurrentUser] = useState({});
 
 	const [cards, setCard] = useState([]);
 
-	const [currentCard, setCurrentCard] = useState('');
+	const [currentCard, setCurrentCard] = useState({});
 
 	useEffect(() => {
 		Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -93,7 +93,7 @@ function App() {
 	function handleEditProfileClick() {
 		setEditProfilePopupOpen(true);
 	}
-	
+
 	function handleChangeAvatar({ avatar }) {
 		api
 			.updateUserAvatar({ avatar })

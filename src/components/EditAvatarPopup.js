@@ -2,15 +2,12 @@ import { useEffect, useState, useContext } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import PopupWithForm from './PopupWithForm';
 
-
 function EditAvatarPopup(props) {
 	const currentUser = useContext(CurrentUserContext);
 
-	const [avatar, setAvatar] = useState(currentUser.avatar);
-
+	const [avatar, setAvatar] = useState('');
 
 	useEffect(() => {
-		setAvatar(currentUser.avatar);
 		setAvatar('');
 	}, [props.isOpen]);
 
